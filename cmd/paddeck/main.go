@@ -16,6 +16,7 @@ import (
 	"github.com/JunyuZhan/paddeck/internal/api"
 	"github.com/JunyuZhan/paddeck/internal/collector"
 	"github.com/JunyuZhan/paddeck/internal/config"
+	"github.com/JunyuZhan/paddeck/internal/demo"
 	"github.com/JunyuZhan/paddeck/internal/store"
 	"github.com/JunyuZhan/paddeck/web"
 )
@@ -31,6 +32,7 @@ func main() {
 		force      = flag.Bool("force", false, "overwrite an existing file with -init")
 		check      = flag.Bool("check", false, "validate the config and probe every target, then exit")
 		showVer    = flag.Bool("version", false, "print version and exit")
+		demoMode   = flag.Bool("demo", false, "serve a synthetic fleet (no config needed)")
 	)
 	flag.Parse()
 
@@ -49,6 +51,11 @@ func main() {
 		}
 		fmt.Printf("wrote %s\n\nNext:\n  1. edit it (hosts, services)\n"+
 			"  2. run: paddeck -check\n  3. run: paddeck\n", path)
+		return
+	}
+
+	if *demoMode {
+		runDemo(cfgListen(), *dbPath)
 		return
 	}
 
@@ -115,6 +122,39 @@ func main() {
 	defer cancel()
 	_ = httpServer.Shutdown(shutdownCtx)
 	os.Exit(0)
+}
+
+// cfgListen returns the listen address for demo mode (env override allowed).
+func cfgListen() string {
+	if v := os.Getenv("PADDECK_LISTEN"); v != "" {
+		return v
+	}
+	return ":9080"
+}
+
+// runDemo serves generated data so the UI can be evaluated with zero setup.
+func runDemo(addr, db string) {
+	src := demo.New()
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer stop()
+	go src.Start(ctx)
+
+	static, err := fs.Sub(web.FS, ".")
+	if err != nil {
+		log.Fatalf("web: %v", err)
+	}
+	srv := &api.Server{Mgr: src, Store: src, Web: static}
+	httpServer := &http.Server{Addr: addr, Handler: srv.Handler(), ReadHeaderTimeout: 5 * time.Second}
+	go func() {
+		log.Printf("PadDeck %s DEMO mode on %s (no config, synthetic data)", version, addr)
+		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("http: %v", err)
+		}
+	}()
+	<-ctx.Done()
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	_ = httpServer.Shutdown(shutdownCtx)
 }
 
 // resolveDB keeps `paddeck` runnable from a checkout without flags.

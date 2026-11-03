@@ -4,6 +4,7 @@
 #   make run       run from a checkout (auto-discovers config.yaml)
 #   make check     compile + probe every configured target
 #   make test      unit tests
+#   make demo      run with synthetic data (no config needed)
 #   make theme     regenerate theme CSS from web/style.css
 #   make docker    build and start the container
 #   make verify    everything CI runs
@@ -14,7 +15,7 @@ GOFLAGS ?=
 LDFLAGS := -s -w -X main.version=$(VERSION)
 GOPROXY ?= https://goproxy.cn,direct
 
-.PHONY: help build run check test vet fmt theme verify docker clean
+.PHONY: help build run check demo test vet fmt theme verify docker clean
 
 help:
 	@sed -n '2,12p' Makefile | sed 's/^# \{0,1\}//'
@@ -38,6 +39,9 @@ test:
 vet:
 	GOPROXY=$(GOPROXY) go vet ./...
 	gofmt -l . | (! grep .) || (echo "run: gofmt -w ." && exit 1)
+
+demo:
+	GOPROXY=$(GOPROXY) go run ./cmd/paddeck -demo
 
 theme:
 	python3 tools/themes.py

@@ -11,10 +11,21 @@ import (
 	"github.com/JunyuZhan/paddeck/internal/store"
 )
 
+// SnapshotSource is anything that can hand out the latest snapshot
+// (the real collector manager, or the demo generator).
+type SnapshotSource interface {
+	Snapshot() collector.Snapshot
+}
+
+// HistorySource is anything that can return stored samples (SQLite or demo).
+type HistorySource interface {
+	History(host string, from, to int64, limit int) ([]store.Sample, error)
+}
+
 // Server exposes the read-only API and static frontend.
 type Server struct {
-	Mgr   *collector.Manager
-	Store *store.Store
+	Mgr   SnapshotSource
+	Store HistorySource
 	Web   fs.FS
 }
 

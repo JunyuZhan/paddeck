@@ -1,3 +1,4 @@
+# 没有设备？先 `paddeck -demo` 看效果（合成数据，不需要本文件）
 server:
   listen: ":9080"
 

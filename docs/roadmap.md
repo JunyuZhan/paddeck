@@ -81,7 +81,7 @@ collector:
 - [x] 历史重写：公开仓库只保留一个干净的初始提交（旧历史留在本地 `archive/pre-public`）
 - [x] 标准开源文件：LICENSE / CONTRIBUTING / SECURITY / CODE_OF_CONDUCT / CHANGELOG / Makefile
 - [x] Issue / PR 模板、CI（gofmt / vet / test / build / 私密文件检查 / 主题同步）
-- [ ] README 加截图（需要先补 `docs/screenshots/`）
+- [x] README 加截图（`docs/screenshots/`，由 `-demo` 合成数据生成）
 - [ ] 打 tag `v0.3.0` 并 publish release
 
 ### 2.6 开箱即用
@@ -90,7 +90,7 @@ collector:
 - [x] 配置自动发现（5 个位置）+ `PADDECK_CONFIG` 环境变量
 - [x] 配置 `${ENV}` 展开
 - [x] SSH 密钥自动查找（`~/.ssh/id_*` / ssh-agent）
-- [ ] `paddeck -demo`：内置假数据，`docker run` 即可看到界面（评估用）
+- [x] `paddeck -demo`：内置假数据，`docker run` 即可看到界面（评估用）
 - [ ] 首次启动时若没有配置，直接打印 `-init` 指引（现在会报错并提示）
 
 ---

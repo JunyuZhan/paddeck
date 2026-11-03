@@ -25,6 +25,9 @@
 - 多台 PVE，节点名取配置里的 `name`
 - 无数据启动页（SYNCING + 双环动画）
 - `-init` 生成配置、`-check` 逐项体检、配置自动发现、`${ENV}` 展开、SSH 密钥自动查找
+- `-demo` 演示模式：合成数据，无需配置即可查看界面
+- README 截图（由 `-demo` 生成，不含任何真实设备信息）
+- `docs/configuration.md`、`docs/deploy-with-agent.md`（AI Agent 部署提示词）
 - 自适应降级 `.lowfx` 与 `?lowfx` 手动开关
 - Docker 部署（多阶段构建、健康检查）
 
