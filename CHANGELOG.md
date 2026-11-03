@@ -9,6 +9,22 @@
 - 容器页按主机分组
 - 告警阈值可配置（CPU / 内存 / 磁盘）
 
+## [0.3.1] - 2026-11-03
+
+### 新增
+- `paddeck -demo` 演示模式：合成数据，无需配置、无需真实设备即可查看界面
+- `docs/screenshots/`：7 张截图（6 个页面 + 外观选择页），全部由演示数据生成，不含真实设备信息
+- `docs/configuration.md`：按设备类型拆分的完整配置说明
+- `docs/deploy-with-agent.md`：可直接粘贴给 AI 编程助手的部署提示词与验收清单
+- `make demo` / `make build-linux` / `make verify`
+
+### 变更
+- README 重写为精简版：截图优先、明确「设备任意组合」、推荐用 AI Agent 部署，
+  详细配置移入 `docs/`
+
+### 修复
+- `.gitignore` 里的 `paddeck` 同时匹配了 `cmd/paddeck/` 源码目录，导致构建失败
+
 ## [0.3.0] - 2026-11-03
 
 首个公开版本。
@@ -25,9 +41,7 @@
 - 多台 PVE，节点名取配置里的 `name`
 - 无数据启动页（SYNCING + 双环动画）
 - `-init` 生成配置、`-check` 逐项体检、配置自动发现、`${ENV}` 展开、SSH 密钥自动查找
-- `-demo` 演示模式：合成数据，无需配置即可查看界面
-- README 截图（由 `-demo` 生成，不含任何真实设备信息）
-- `docs/configuration.md`、`docs/deploy-with-agent.md`（AI Agent 部署提示词）
+
 - 自适应降级 `.lowfx` 与 `?lowfx` 手动开关
 - Docker 部署（多阶段构建、健康检查）
 
