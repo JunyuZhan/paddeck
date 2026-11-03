@@ -1,0 +1,80 @@
+server:
+  listen: ":9080"
+
+collector:
+  interval: 10s          # 主机采集间隔
+  docker_interval: 30s   # Docker 采集间隔（docker stats 较重）
+  history_interval: 60s  # 历史写入间隔
+  http_timeout: 3s
+  ssh_timeout: 8s
+  retention_days: 30
+  # ssh_key: ~/.ssh/id_ed25519   # 留空 = 自动查找（config -> ~/.ssh/id_ed25519 -> id_rsa -> id_ecdsa -> ssh-agent）
+
+# 示例：把 address / user 换成你自己的机器
+# type: linux（默认，走 SSH）| ikuai（走爱快 Web API）
+hosts:
+  - id: app-01
+    name: app-01
+    address: 192.168.1.10
+    user: youruser
+    docker: true
+    docker_sudo: true          # 普通用户需要 sudo -n docker 时打开
+    labels: ["业务", "Debian"]
+
+  - id: tools-01
+    name: tools-01
+    address: 192.168.1.11
+    user: root
+    docker: true
+    labels: ["工具", "Debian"]
+
+  - id: router
+    name: router
+    address: 192.168.1.1
+    user: root
+    docker: true
+    labels: ["路由", "OpenWrt"]
+
+  - id: nas
+    name: NAS
+    address: 192.168.1.5
+    user: youruser
+    docker: true
+    docker_path: /usr/local/bin/docker   # 群晖 DSM 的路径
+    disk_mounts: ["/volume1"]
+    labels: ["存储", "DSM"]
+
+  # 爱快路由：不需要 SSH，登录 Web API 采集 CPU / 内存 / 在线终端 / WAN 速率
+  # api_url 默认 https://<address>:444，密码在设备里是 md5 后提交，这里写明文即可
+  - id: ikuai
+    name: iKuai
+    type: ikuai
+    address: 192.168.1.1
+    api_url: https://192.168.1.1:444
+    username: admin
+    password: "change-me"
+    labels: ["路由", "iKuai"]
+
+# 可选：Proxmox VE（需要 root SSH）。可以列多台，节点名会显示成 name。
+pve:
+  - id: pve
+    name: pve
+    address: 192.168.1.4
+    user: root
+
+  - id: pve2
+    name: pve2
+    address: 192.168.1.6
+    user: root
+
+services:
+  - name: PVE
+    url: https://192.168.1.4:8006/
+  - name: pve2
+    url: https://192.168.1.6:8006/
+  - name: NAS
+    url: http://192.168.1.5/
+  - name: Router
+    url: http://192.168.1.1/
+  - name: iKuai
+    url: https://192.168.1.1:444/

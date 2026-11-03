@@ -1,0 +1,21 @@
+services:
+  paddeck:
+    build: .
+    container_name: paddeck
+    restart: unless-stopped
+    ports:
+      - "9080:9080"
+    volumes:
+      - ./config.yaml:/config/config.yaml:ro
+      - ./keys:/keys:ro
+      - paddeck-data:/data
+    environment:
+      - TZ=Asia/Shanghai
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:9080/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  paddeck-data:

@@ -1,0 +1,25 @@
+# private config (contains your real hosts and possibly passwords)
+config.yaml
+config.local.yaml
+*.local.yaml
+
+# keys and history
+keys/
+data/
+*.db
+*.db-shm
+*.db-wal
+
+# build output
+paddeck
+paddeck-linux
+/dist/
+
+# editors / OS
+.DS_Store
+.idea/
+.vscode/
+
+# local scratch
+*.bundle
+coverage.out

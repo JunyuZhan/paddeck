@@ -1,0 +1,57 @@
+name: Bug report
+description: 报告一个可复现的问题
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈！请先确认：`paddeck -check` 是否已经跑过？
+        ⚠️ 贴日志前请把内网 IP、主机名、用户名打码。
+  - type: input
+    id: version
+    attributes:
+      label: PadDeck 版本
+      description: 输出 `paddeck -version`
+      placeholder: v0.3.0
+    validations:
+      required: true
+  - type: dropdown
+    id: deploy
+    attributes:
+      label: 部署方式
+      options:
+        - Docker Compose
+        - 直接运行二进制（systemd 等）
+        - 本地 go run
+    validations:
+      required: true
+  - type: input
+    id: client
+    attributes:
+      label: 浏览器 / 设备
+      placeholder: iPad 4 / iOS 10.3.3 / Safari 10；或 Chrome 120
+  - type: textarea
+    id: what
+    attributes:
+      label: 现象
+      description: 实际发生了什么？期望是什么？
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 打开 #hosts
+        2. 左右滑动
+        3. ...
+  - type: textarea
+    id: check
+    attributes:
+      label: paddeck -check 输出（脱敏后）
+      render: shell
+  - type: textarea
+    id: logs
+    attributes:
+      label: 相关日志（脱敏后）
+      render: shell

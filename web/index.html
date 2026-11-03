@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<title>PadDeck</title>
+<link rel="stylesheet" id="theme" href="theme-mocha.css">
+</head>
+<body>
+
+<!-- ambient layers -->
+<div id="bgfx" class="fx-aurora"></div>
+<div id="bg-grid"><div class="g-inner"></div></div>
+<div id="shimmer"></div>
+<div id="spotlight"></div>
+
+<div id="app">
+  <div id="offline-banner">LINK LOST · RETRYING</div>
+
+  <header id="topbar">
+    <div class="brand">PADDECK<span class="nl"></span></div>
+    <div class="section" id="section">OVERVIEW</div>
+    <div class="sys" id="sys"></div>
+    <div class="clock" id="clock">--:--</div>
+  </header>
+
+  <main id="pages">
+    <section class="page active" id="page-overview">
+      <div class="kpis" id="kpis"></div>
+      <div class="alerts" id="alerts"></div>
+    </section>
+
+    <section class="page" id="page-hosts">
+      <div class="grid" id="grid-hosts"></div>
+    </section>
+
+    <section class="page" id="page-containers">
+      <div class="grid" id="grid-containers"></div>
+    </section>
+
+    <section class="page" id="page-pve">
+      <div class="pve-nodes"><div class="grid" id="grid-pve-nodes"></div></div>
+      <div class="pve-guests"><div class="grid" id="grid-pve-guests"></div></div>
+    </section>
+
+    <section class="page" id="page-services">
+      <div class="grid" id="grid-services"></div>
+    </section>
+
+    <section class="page" id="page-trend">
+      <div class="trend-head">
+        <div class="trend-title">6H HISTORY · CPU / MEM</div>
+        <div class="trend-legend">
+          <span class="lg-cpu">CPU</span><span class="lg-mem">MEM</span>
+        </div>
+      </div>
+      <div class="trend-body" id="trend-body"></div>
+    </section>
+  </main>
+
+  <footer id="bottombar">
+    <div class="dots" id="dots"></div>
+    <div class="hint" id="hint">SWIPE · AUTO 20S</div>
+  </footer>
+</div>
+
+<div id="boot">
+  <div class="boot-ring">
+    <svg viewBox="0 0 150 150">
+      <circle class="r1" cx="75" cy="75" r="58" fill="none" stroke="#cba6f7" stroke-width="2"
+              stroke-linecap="round" stroke-dasharray="70 300" opacity="0.95"/>
+      <circle class="r2" cx="75" cy="75" r="44" fill="none" stroke="#94e2d5" stroke-width="1.5"
+              stroke-linecap="round" stroke-dasharray="26 250" opacity="0.8"/>
+      <circle cx="75" cy="75" r="3" fill="#cba6f7"/>
+    </svg>
+  </div>
+  <div class="boot-t">SYNCING</div>
+  <div class="boot-s" id="boot-s">CONNECTING TO COLLECTORS</div>
+  <div class="boot-dots"><i></i><i></i><i></i><i></i><i></i></div>
+</div>
+
+<div id="picker">
+  <div class="pk-h">PADDECK · 外观</div>
+  <div class="pk-sub">选配色和背景 · 选择会被记住，换一套只要重新打开本页</div>
+  <div class="pk-grid" id="pk-grid"></div>
+  <div class="pk-sec">背景 BACKGROUND</div>
+  <div class="pk-bgs" id="pk-bgs"></div>
+  <div class="pk-foot" id="pk-foot">TAP TO APPLY</div>
+</div>
+
+<script src="themes.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

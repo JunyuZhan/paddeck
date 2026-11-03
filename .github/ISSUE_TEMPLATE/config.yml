@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 安全问题
+    url: https://github.com/JunyuZhan/paddeck/security/advisories/new
+    about: 请通过 Security Advisories 私下报告漏洞，不要开公开 Issue
+  - name: 开发文档
+    url: https://github.com/JunyuZhan/paddeck/blob/main/docs/development.md
+    about: 本地开发、加采集器、加主题/背景
