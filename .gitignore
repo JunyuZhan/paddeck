@@ -11,8 +11,8 @@ data/
 *.db-wal
 
 # build output
-paddeck
-paddeck-linux
+/paddeck
+/paddeck-linux
 /dist/
 
 # editors / OS
